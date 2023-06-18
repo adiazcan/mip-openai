@@ -6,7 +6,10 @@ public class AppConfig
         
         public AppConfig()
         {
-             configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false).Build();                       
+             configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", false)
+                .AddJsonFile("appsettings.development.json", false)
+                .Build();                       
         }
 
         public string GetClientId()

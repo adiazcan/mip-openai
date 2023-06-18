@@ -16,5 +16,13 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.54.1" />
     <PackageReference Include="Microsoft.InformationProtection.File" Version="1.13.176" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="appsettings.development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

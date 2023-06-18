@@ -27,28 +27,38 @@ foreach (var template in templates)
 }
 
 Console.WriteLine("");
-Console.WriteLine("Select a template: ");
-var selectedTemplate = Console.ReadLine();
+// Console.WriteLine("Select a template: ");
+// var selectedTemplate = Console.ReadLine();
 
-var publishHandler = action.CreatePublishingHandler(templates.ElementAt(int.Parse(selectedTemplate)).Id);
+// var publishHandler = action.CreatePublishingHandler(templates.ElementAt(int.Parse(selectedTemplate)).Id);
 
-Console.WriteLine("Enter some string to protect: ");
-var userInputString = Console.ReadLine();
-var userInputBytes = Encoding.UTF8.GetBytes(userInputString);
+// Console.WriteLine("Enter some string to protect: ");
+// var userInputString = Console.ReadLine();
+// var userInputBytes = Encoding.UTF8.GetBytes(userInputString);
 
-var encryptedBytes = action.Protect(publishHandler, userInputBytes);
-Console.WriteLine("");
-Console.WriteLine("Encrypted bytes (UTF8): {0}", Encoding.UTF8.GetString(encryptedBytes));
-Console.WriteLine("Encrypted bytes (base64): {0}", Convert.ToBase64String(encryptedBytes));
-Console.WriteLine("");
+// var encryptedBytes = action.Protect(publishHandler, userInputBytes);
+// Console.WriteLine("");
+// Console.WriteLine("Encrypted bytes (UTF8): {0}", Encoding.UTF8.GetString(encryptedBytes));
+// Console.WriteLine("Encrypted bytes (base64): {0}", Convert.ToBase64String(encryptedBytes));
+// Console.WriteLine("");
 
-var serializedPublishingLicense = publishHandler.GetSerializedPublishingLicense();
+// var serializedPublishingLicense = publishHandler.GetSerializedPublishingLicense();
 
-var consumeHandler = action.CreateConsumptionHandler(serializedPublishingLicense);
+// var consumeHandler = action.CreateConsumptionHandler(serializedPublishingLicense);
 
-var decryptedBytes = action.Unprotect(consumeHandler, encryptedBytes);
+// var decryptedBytes = action.Unprotect(consumeHandler, encryptedBytes);
 
-Console.WriteLine("Decrypted content: {0}", Encoding.UTF8.GetString(decryptedBytes));
+// Console.WriteLine("Decrypted content: {0}", Encoding.UTF8.GetString(decryptedBytes));
+
+using (var stream = new FileStream(@"c:\kk\memoria.pdf", FileMode.Open, FileAccess.Read))
+{
+    var decryptedStream = await action.GetDecryptedStreamAsync(stream, "memoria.pdf");
+
+    using (var outputStream = new FileStream(@"c:\kk\memoria-un.pdf", FileMode.Create, FileAccess.Write))
+    {
+        outputStream.CopyTo(decryptedStream);
+    }
+}
 
 Console.WriteLine("Press a key to quit.");
 Console.ReadKey();
