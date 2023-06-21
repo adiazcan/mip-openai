@@ -4,7 +4,7 @@ using Microsoft.InformationProtection.Protection;
 
 public class Action
 {
-    private AuthDelegateImpl authDelegate;
+    private AuthDelegateImplementationClientSecret authDelegate;
     private ApplicationInfo appInfo;
     private IFileProfile profile;
     private IFileEngine engine;
@@ -43,7 +43,7 @@ public class Action
         this.appInfo = appInfo;
 
         // Initialize AuthDelegateImplementation using AppInfo. 
-        authDelegate = new AuthDelegateImpl(this.appInfo);
+        authDelegate = new AuthDelegateImplementationClientSecret(this.appInfo);
 
         // Create MipConfiguration Object
         var mipConfiguration = new MipConfiguration(appInfo, "mip_data", LogLevel.Trace, false);
@@ -134,7 +134,7 @@ public class Action
         return engine;
     }
 
-    private IProtectionProfile CreateProtectionProfile(ApplicationInfo appInfo, ref AuthDelegateImpl authDelegate)
+    private IProtectionProfile CreateProtectionProfile(ApplicationInfo appInfo, ref AuthDelegateImplementationClientSecret authDelegate)
     {
         // Initialize ProtectionProfileSettings
         var profileSettings = new ProtectionProfileSettings(mipContext,

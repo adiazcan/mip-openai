@@ -54,11 +54,18 @@ using (var stream = new FileStream(@"c:\kk\memoria.pdf", FileMode.Open, FileAcce
 {
     var decryptedStream = await action.GetDecryptedStreamAsync(stream, "memoria.pdf");
 
-    using (var outputStream = new FileStream(@"c:\kk\memoria-un.pdf", FileMode.Create, FileAccess.Write))
+    if (decryptedStream.Length == 0)
     {
-        outputStream.CopyTo(decryptedStream);
+        Console.WriteLine("Decrypted stream is empty.");
+    }
+    else
+    {
+        decryptedStream.Position = 0;
+        using (var outputStream = new FileStream(@"c:\kk\memoria-un.pdf", FileMode.Create, FileAccess.Write))
+        {
+            decryptedStream.CopyTo(outputStream);
+        }
     }
 }
 
 Console.WriteLine("Press a key to quit.");
-Console.ReadKey();
